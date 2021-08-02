@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">YouTube_Searcher</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="youtube_page_label">Youtube</string>
+    <string name="playlist_page_label">Playlist</string>
+    <string name="description_playlist">Playlist</string>
+    <string name="description_youtube">Youtube</string>
+    <string name="add_to_playlist">add to playlist</string>
+</resources>

@@ -2,8 +2,10 @@ package com.github.youtube_searcher.model
 
 import com.github.youtube_searcher.model.fullresponse.*
 import com.github.youtube_searcher.util.EntityMapper
+import javax.inject.Inject
 
-class YoutubeResponseMapper : EntityMapper<Item, MappedYoutubeItem> {
+class YoutubeResponseMapper @Inject constructor() : EntityMapper<Item, MappedYoutubeItem> {
+
 
     override fun mapFromEntity(entity: Item): MappedYoutubeItem =
         MappedYoutubeItem(

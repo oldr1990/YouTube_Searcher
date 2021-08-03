@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/youtubeFragment"
-        android:name="com.github.youtube_searcher.ui.YoutubeFragment"
+        android:name="com.github.youtube_searcher.ui.youtube.YoutubeFragment"
         android:label="fragment_youtube"
         tools:layout="@layout/fragment_youtube" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/playlistFragment"
-        android:name="com.github.youtube_searcher.ui.PlaylistFragment"
+        android:name="com.github.youtube_searcher.ui.playlist.PlaylistFragment"
         android:label="fragment_playlist"
         tools:layout="@layout/fragment_playlist" />
 </navigation>

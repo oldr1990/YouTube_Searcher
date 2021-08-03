@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryInterface {
     suspend fun searchYoutube(
-        search: String,
-        pageToken: String
+        search: String
         ): Flow<PagingData<MappedYoutubeItem>>
     fun addToPlaylist(listToAdd: List<MappedYoutubeItem>)
     fun deleteFromPlaylist(itemToDelete: MappedYoutubeItem)

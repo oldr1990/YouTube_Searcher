@@ -1,5 +1,6 @@
 package com.github.youtube_searcher.di
 
+import com.github.youtube_searcher.repository.retrofit.YoutubeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit
 @Module
 @InstallIn(ActivityComponent::class)
 object MainModule {
+
     @ActivityRetainedScoped
     @Provides
     fun provideOkHTTP(): OkHttpClient =

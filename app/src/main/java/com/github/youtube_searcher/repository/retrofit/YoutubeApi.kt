@@ -1,4 +1,4 @@
-package com.github.youtube_searcher.di
+package com.github.youtube_searcher.repository.retrofit
 
 import com.github.youtube_searcher.model.fullresponse.YoutubeSearchResponse
 import retrofit2.Response

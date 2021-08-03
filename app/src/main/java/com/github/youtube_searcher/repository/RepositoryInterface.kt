@@ -9,5 +9,8 @@ interface RepositoryInterface {
     suspend fun searchYoutube(
         search: String,
         pageToken: String
-        ): Resource<MappedYoutubeItem>
+        ): Flow<PagingData<MappedYoutubeItem>>
+    fun addToPlaylist(listToAdd: List<MappedYoutubeItem>)
+    fun deleteFromPlaylist(itemToDelete: MappedYoutubeItem)
+    fun getPlaylist(): Flow<PagingData<MappedYoutubeItem>>
 }

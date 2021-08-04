@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/drawable/ic_youtube.xml" value="0.24583333333333332" />
+        <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/layout/fragment_playlist.xml" value="0.2957427536231884" />
         <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/layout/fragment_youtube.xml" value="0.2957427536231884" />
         <entry key="..\:/AndroidProjects/YouTube_Searcher/app/src/main/res/layout/youtube_paging_item.xml" value="0.33" />

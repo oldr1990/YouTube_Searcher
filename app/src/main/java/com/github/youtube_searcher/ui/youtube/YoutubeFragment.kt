@@ -8,15 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.github.youtube_searcher.R
+import com.github.youtube_searcher.model.MappedYoutubeItem
+import com.github.youtube_searcher.repository.room.PlaylistDatabase
 import com.github.youtube_searcher.ui.adapters.YoutubePagingAdapter
+import com.github.youtube_searcher.ui.adapters.YoutubeViewHolder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,23 +50,38 @@ class YoutubeFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    //Добавляет или убирает обьект из буффера по чекбоксу
+    private val onCheckListener: (item: MappedYoutubeItem, isChecked: Boolean) -> Unit =
+        { item: MappedYoutubeItem, isChecked: Boolean ->
+            if (isChecked) viewModel.addToBuffer(item)
+            else viewModel.removeFromBuffer(item)
+        }
+
+    override fun onResume() {
+        super.onResume()
         val recyclerView = activity?.findViewById<RecyclerView>(R.id.youtube_recycler_view)
-        pagingAdapter = YoutubePagingAdapter()
+        pagingAdapter = YoutubePagingAdapter(onCheckListener)
         recyclerView?.adapter = pagingAdapter
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         viewModel.searchYoutube()
-        viewModel.pagingFlow?.let {
-            CoroutineScope(Dispatchers.IO).launch {
-                it.collect {
-                    Log.i("!@#","Data collected")
-                    pagingAdapter.submitData(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagingFlow?.collectLatest {
+                Log.i("!@#", "Data collected $it")
+                pagingAdapter.submitData(it)
+            }
+        }
+        lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.collectLatest {
+                when (it.refresh) {
+                    is LoadState.NotLoading -> Log.i("!@#", "Not loading")
+                    LoadState.Loading -> Log.i("!@#", "Loading")
+                    is LoadState.Error -> Log.i("!@#", "Error loading")
+                    else -> {
+                        Log.i("!@#", "Unexpected state")
+                    }
                 }
             }
         }
-
-
     }
 
     override fun onCreateView(

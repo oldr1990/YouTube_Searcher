@@ -23,7 +23,8 @@ class YoutubePagingSource
         return state.anchorPosition?.let { anchorPosition ->
             Log.i("!@#", "paging source get refresh key ca;l;")
             val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey ?: anchorPage?.nextKey
+            if (anchorPage?.prevKey != null) anchorPage.nextKey
+            else null
         }
     }
 
@@ -31,16 +32,16 @@ class YoutubePagingSource
         return try {
             Log.i("!@#", "paging source load call")
         //    Log.i("!@#", params.toString())
-
             val pageIndex = params.key
-            val response = youtubeApi.searchVideos(search, API_KEY,pageIndex)
-         //   Log.i("!@#", response.body().toString())
+            Log.i("!@#", "Request: $search , $pageIndex")
+            val response = youtubeApi.searchVideos(search,pageToken = pageIndex)
+           Log.i("!@#", "response ${response.body().toString()}")
             val responseData = mutableListOf<MappedYoutubeItem>()
             val prevKey = response.body()?.prevPageToken
             val nextKey = response.body()?.nextPageToken
             val data = youtubeMapper.mapListFromEntity(response.body()?.items?: emptyList())
             responseData.addAll(data)
-          //  Log.i("!@#", responseData.toString())
+           Log.i("!@#", "ResponseData: $responseData")
             PagingSource.LoadResult.Page(responseData,prevKey,nextKey)
         } catch (e: Exception){
             PagingSource.LoadResult.Error(e)

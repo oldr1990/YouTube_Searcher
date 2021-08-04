@@ -25,6 +25,8 @@
             android:layout_margin="16dp">
 
             <ImageView
+                android:maxHeight="100dp"
+                android:maxWidth="100dp"
                 android:id="@+id/imageView"
                 android:contentDescription="@string/video_image"
                 android:layout_width="wrap_content"

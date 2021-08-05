@@ -2,11 +2,8 @@ package com.github.youtube_searcher.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
+import androidx.navigation.fragment.NavHostFragment
 import com.github.youtube_searcher.R
-import com.github.youtube_searcher.repository.room.PlaylistDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,16 +12,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-
-
-      //  setupWithNavController(bottom_navigation_view: BottomNavigationView, navController: NavController)
-
-    }
-    private fun setupBottomNavMenu(navController: NavController) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        bottomNav?.setupWithNavController(navController)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navigation_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val bottomNavigationView =
+            findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_item_youtubeFragment -> {
+                   if (navController.currentDestination?.id != R.layout.fragment_youtube)
+                    navController.popBackStack()
+                    true
+                }
+                R.id.menu_item_playlistFragment -> {
+                    if (navController.currentDestination?.id != R.layout.fragment_playlist)
+                    navController.navigate(R.id.action_youtubeFragment_to_playlistFragment)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 }

@@ -3,13 +3,10 @@ package com.github.youtube_searcher.repository.paging_source
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.github.youtube_searcher.Constants.YoutubeSettings.API_KEY
-import com.github.youtube_searcher.Constants.YoutubeSettings.MAX_RESULT
 import com.github.youtube_searcher.model.MappedYoutubeItem
-import com.github.youtube_searcher.model.YoutubeResponseMapper
+import com.github.youtube_searcher.model.mappers.YoutubeResponseMapper
 import com.github.youtube_searcher.repository.retrofit.YoutubeApi
-import java.lang.Exception
-import javax.inject.Inject
+import kotlin.Exception
 
 class YoutubePagingSource
     (
@@ -39,10 +36,13 @@ class YoutubePagingSource
             val responseData = mutableListOf<MappedYoutubeItem>()
             val prevKey = response.body()?.prevPageToken
             val nextKey = response.body()?.nextPageToken
-            val data = youtubeMapper.mapListFromEntity(response.body()?.items?: emptyList())
-            responseData.addAll(data)
-           Log.i("!@#", "ResponseData: $responseData")
-            PagingSource.LoadResult.Page(responseData,prevKey,nextKey)
+            if (response.body()?.items != null ) {
+                val data = youtubeMapper.mapListFromEntity(response.body()?.items?: emptyList())
+                responseData.addAll(data)
+                Log.i("!@#", "ResponseData: $responseData")
+                PagingSource.LoadResult.Page(responseData, prevKey, nextKey)
+            }
+            else  PagingSource.LoadResult.Error(Exception(response.body()?.error?.message ?: "Unexpected Error"))
         } catch (e: Exception){
             PagingSource.LoadResult.Error(e)
         }

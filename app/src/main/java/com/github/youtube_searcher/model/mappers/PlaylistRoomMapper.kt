@@ -1,5 +1,7 @@
-package com.github.youtube_searcher.model
+package com.github.youtube_searcher.model.mappers
 
+import com.github.youtube_searcher.model.MappedYoutubeItem
+import com.github.youtube_searcher.model.room.RoomItem
 import com.github.youtube_searcher.util.EntityMapper
 import javax.inject.Inject
 

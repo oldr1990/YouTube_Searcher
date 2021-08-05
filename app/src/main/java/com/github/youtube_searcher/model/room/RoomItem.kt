@@ -1,4 +1,4 @@
-package com.github.youtube_searcher.model
+package com.github.youtube_searcher.model.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

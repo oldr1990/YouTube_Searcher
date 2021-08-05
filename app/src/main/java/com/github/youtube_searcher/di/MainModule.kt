@@ -1,8 +1,8 @@
 package com.github.youtube_searcher.di
 
 
-import com.github.youtube_searcher.model.PlaylistRoomMapper
-import com.github.youtube_searcher.model.YoutubeResponseMapper
+import com.github.youtube_searcher.model.mappers.PlaylistRoomMapper
+import com.github.youtube_searcher.model.mappers.YoutubeResponseMapper
 import com.github.youtube_searcher.repository.DefaultRepository
 import com.github.youtube_searcher.repository.RepositoryInterface
 import com.github.youtube_searcher.repository.retrofit.YoutubeApi

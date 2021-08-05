@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.github.youtube_searcher.model.RoomItem
+import com.github.youtube_searcher.model.room.RoomItem
 
 @Dao
 interface PlaylistDao {

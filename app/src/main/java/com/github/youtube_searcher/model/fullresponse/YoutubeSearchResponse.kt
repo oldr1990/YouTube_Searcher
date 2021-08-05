@@ -17,5 +17,7 @@ data class YoutubeSearchResponse(
     @SerializedName("prevPageToken")
     val prevPageToken: String?,
     @SerializedName("regionCode")
-    val regionCode: String
+    val regionCode: String,
+    @SerializedName("error")
+    val error: Error
 )

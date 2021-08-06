@@ -39,7 +39,6 @@ class YoutubeViewModel @Inject constructor(
     }
 
     fun addBufferToPlaylist(){
-
         viewModelScope.launch(Dispatchers.IO){
             repositoryInterface.addToPlaylist(buffer.toList())
         }

@@ -17,6 +17,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.youtube_searcher.Constants.ERROR_INVALID_INPUT
+import com.github.youtube_searcher.Constants.ERROR_UNEXPECTED
 import com.github.youtube_searcher.R
 import com.github.youtube_searcher.databinding.FragmentYoutubeBinding
 import com.github.youtube_searcher.model.MappedYoutubeItem
@@ -114,11 +115,13 @@ class YoutubeFragment : Fragment() {
                             LoadState.Loading -> progressBar?.visibility = View.VISIBLE
                             is LoadState.Error -> {
                                 progressBar?.visibility = View.GONE
-                                Log.i("!@#", it.refresh.toString())
+                                Toast.makeText(requireContext(),  it.refresh.toString(), Toast.LENGTH_SHORT)
+                                    .show()
                             }
                             else -> {
                                 progressBar?.visibility = View.GONE
-                                Log.i("!@#", "Unexpected state")
+                                Toast.makeText(requireContext(),  ERROR_UNEXPECTED, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     }
@@ -128,7 +131,6 @@ class YoutubeFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -136,7 +138,6 @@ class YoutubeFragment : Fragment() {
         binding = FragmentYoutubeBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_youtube, container, false)
-
     }
 
     companion object {

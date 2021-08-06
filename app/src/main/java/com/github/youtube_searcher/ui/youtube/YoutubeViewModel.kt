@@ -29,16 +29,23 @@ class YoutubeViewModel @Inject constructor(
     //ограничение доступа к буфферу
     fun addToBuffer(item: MappedYoutubeItem){
         buffer.add(item)
-        isBufferNotEmpty = true
+        isBufferNotEmpty = buffer.isNotEmpty()
+        Log.i("!@#", "Buffer ${buffer.toString()}")
     }
     fun removeFromBuffer(item: MappedYoutubeItem){
         buffer.remove(item)
         isBufferNotEmpty = buffer.isNotEmpty()
+        Log.i("!@#", "Buffer ${buffer.toString()}")
     }
 
     fun addBufferToPlaylist(){
-        repositoryInterface.addToPlaylist(buffer)
-        buffer.removeAll(buffer)
+        Log.i("!@#", "Buffer ${buffer.toString()}")
+        viewModelScope.launch (Dispatchers.IO){
+            repositoryInterface.addToPlaylist(buffer)
+        }
+        buffer.clear()
+        isBufferNotEmpty = false
+        Log.i("!@#", "Buffer ${buffer.toString()}")
     }
 
     fun searchYoutube(search: String) {
@@ -48,7 +55,7 @@ class YoutubeViewModel @Inject constructor(
                 pagingFlow = repositoryInterface.searchYoutube(search)
             }
         }catch (e: Exception){
-            print(e.message + "!@#")
+            Log.e("!@#", "Unexpected Error : ${e.message.toString()}")
         }
     }
 }

@@ -18,9 +18,5 @@
         android:id="@+id/playlistFragment"
         android:name="com.github.youtube_searcher.ui.playlist.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" >
-        <action
-            android:id="@+id/action_playlistFragment_to_youtubeFragment"
-            app:destination="@id/youtubeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_playlist" />
 </navigation>

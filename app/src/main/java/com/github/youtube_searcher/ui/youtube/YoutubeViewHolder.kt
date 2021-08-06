@@ -1,4 +1,4 @@
-package com.github.youtube_searcher.ui.adapters
+package com.github.youtube_searcher.ui.youtube
 
 import android.view.View
 import android.widget.CheckBox
@@ -21,7 +21,6 @@ class YoutubeViewHolder(
         val descriptionView = itemView.findViewById<TextView>(R.id.description)
         val imageView = itemView.findViewById<ImageView>(R.id.imageView)
         val checkBox = itemView.findViewById<CheckBox>(R.id.checkBox)
-
         checkBox.isChecked = false
         titleView.text = item.title
         descriptionView.text = item.title
@@ -29,7 +28,6 @@ class YoutubeViewHolder(
         titleView.setOnClickListener {
             Toast.makeText(itemView.context, item.title,Toast.LENGTH_SHORT).show()
         }
-
        checkBox.setOnCheckedChangeListener { _, isChecked ->
             onCheck(item, isChecked)
         }

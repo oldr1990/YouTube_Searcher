@@ -6,6 +6,8 @@ import androidx.paging.PagingState
 import com.github.youtube_searcher.model.MappedYoutubeItem
 import com.github.youtube_searcher.model.mappers.YoutubeResponseMapper
 import com.github.youtube_searcher.repository.retrofit.YoutubeApi
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import kotlin.Exception
 
 class YoutubePagingSource
@@ -30,19 +32,26 @@ class YoutubePagingSource
             Log.i("!@#", "paging source load call")
         //    Log.i("!@#", params.toString())
             val pageIndex = params.key
-            Log.i("!@#", "Request: $search , $pageIndex")
+         //   Log.i("!@#", "Request: $search , $pageIndex")
             val response = youtubeApi.searchVideos(search,pageToken = pageIndex)
-           Log.i("!@#", "response ${response.body().toString()}")
+         //  Log.i("!@#", "response ${response.body().toString()}")
             val responseData = mutableListOf<MappedYoutubeItem>()
             val prevKey = response.body()?.prevPageToken
             val nextKey = response.body()?.nextPageToken
-            if (response.body()?.items != null ) {
+            if (response.isSuccessful ) {
                 val data = youtubeMapper.mapListFromEntity(response.body()?.items?: emptyList())
                 responseData.addAll(data)
-                Log.i("!@#", "ResponseData: $responseData")
+             //   Log.i("!@#", "ResponseData: $responseData")
                 PagingSource.LoadResult.Page(responseData, prevKey, nextKey)
             }
-            else  PagingSource.LoadResult.Error(Exception(response.body()?.error?.message ?: "Unexpected Error"))
+            else {
+                Log.i("!@#", "Проверь квоты по ютуб апи!}")
+                PagingSource.LoadResult.Error(
+                    Exception(
+                        response.body()?.error?.message ?: "Unexpected Error"
+                    )
+                )
+            }
         } catch (e: Exception){
             PagingSource.LoadResult.Error(e)
         }

@@ -1,4 +1,4 @@
-package com.github.youtube_searcher.ui.adapters
+package com.github.youtube_searcher.ui.youtube
 
 
 import android.view.LayoutInflater
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.github.youtube_searcher.R
 import com.github.youtube_searcher.model.MappedYoutubeItem
 
-class YoutubePagingAdapter(private val onCheckListener: (item: MappedYoutubeItem, isChecked: Boolean) -> Unit) :
+class YoutubePagingAdapter(
+    private val onCheckListener: (item: MappedYoutubeItem, isChecked: Boolean) -> Unit,
+) :
     PagingDataAdapter<MappedYoutubeItem, YoutubeViewHolder>(YoutubeDifferentiator) {
 
 
@@ -19,8 +21,9 @@ class YoutubePagingAdapter(private val onCheckListener: (item: MappedYoutubeItem
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YoutubeViewHolder {
         return YoutubeViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.youtube_paging_item, parent, false),
-            onCheckListener
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.youtube_paging_item, parent, false),
+            onCheckListener,
         )
     }
 

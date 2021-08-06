@@ -1,5 +1,6 @@
 package com.github.youtube_searcher.model.mappers
 
+import android.util.Log
 import com.github.youtube_searcher.model.MappedYoutubeItem
 import com.github.youtube_searcher.model.room.RoomItem
 import com.github.youtube_searcher.util.EntityMapper
@@ -19,6 +20,9 @@ class PlaylistRoomMapper @Inject constructor() : EntityMapper<RoomItem, MappedYo
             domainModel.description,
             domainModel.imageUrl
         )
+
     fun mapListToRoomItem(listToMap: List<MappedYoutubeItem>):List<RoomItem> =
-    listToMap.map {item -> mapToEntity(item) }
+    listToMap.map {item ->
+        Log.e("!@#","${mapToEntity(item)}" )
+        mapToEntity(item) }
 }

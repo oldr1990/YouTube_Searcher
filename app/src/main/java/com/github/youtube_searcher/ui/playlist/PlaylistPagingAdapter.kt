@@ -6,7 +6,6 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.github.youtube_searcher.R
 import com.github.youtube_searcher.model.MappedYoutubeItem
-import com.github.youtube_searcher.model.room.RoomItem
 
 class PlaylistPagingAdapter(
     private val deleteClick: (itemToDelete: MappedYoutubeItem) -> Unit
@@ -22,7 +21,6 @@ class PlaylistPagingAdapter(
                 .inflate(R.layout.playlist_item, parent, false),
             deleteClick,
         )
-
 }
 
 object PlaylistDifferentiator : DiffUtil.ItemCallback<MappedYoutubeItem>() {

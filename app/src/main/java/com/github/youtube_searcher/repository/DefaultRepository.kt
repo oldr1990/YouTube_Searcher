@@ -33,16 +33,18 @@ class DefaultRepository @Inject constructor(
         }.flow
     }
 
-    override fun addToPlaylist(listToAdd: List<MappedYoutubeItem>) {
-        Log.i("!@#", "Repository call")
+    override suspend fun addToPlaylist(listToAdd: List<MappedYoutubeItem>) {
+        Log.e(
+            "!@#", "Repository call add to playlist $listToAdd"
+        )
         playlistDao.insertToPlaylist(playlistRoomMapper.mapListToRoomItem(listToAdd))
     }
 
-    override fun deleteFromPlaylist(itemToDelete: MappedYoutubeItem) {
+    override suspend fun deleteFromPlaylist(itemToDelete: MappedYoutubeItem) {
         playlistDao.delete(playlistRoomMapper.mapToEntity(itemToDelete))
     }
 
-    override fun getPlaylist(): Flow<PagingData<MappedYoutubeItem>> =
+    override  suspend fun getPlaylist(): Flow<PagingData<MappedYoutubeItem>> =
         Pager(config = PagingConfig(20)) {
             playlistDao.getPlaylist().asPagingSourceFactory(Dispatchers.IO).invoke()
         }.flow.map { pagingData -> pagingData.map { playlistRoomMapper.mapFromEntity(it) } }

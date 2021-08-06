@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.github.youtube_searcher.model.MappedYoutubeItem
-import com.github.youtube_searcher.model.room.RoomItem
 import com.github.youtube_searcher.repository.RepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,17 +20,19 @@ class PlaylistViewModel
 ) : ViewModel() {
     var pagingFlow: Flow<PagingData<MappedYoutubeItem>>? = null
 
-    val deleteItem: (itemToDelete: MappedYoutubeItem) -> Unit = { item ->
-        repository.deleteFromPlaylist(item)
-        getPlaylist()
-    }
+    val deleteItem: (itemToDelete: MappedYoutubeItem) -> Unit =
+        { item ->
+            Log.e("!@#", "Deleting: $item")
+            viewModelScope.launch(Dispatchers.IO) { repository.deleteFromPlaylist(item) }
+            getPlaylist()
+        }
 
     fun getPlaylist() {
         try {
-        viewModelScope.launch(Dispatchers.IO) {
-            pagingFlow = repository.getPlaylist()
-        }
-        }catch (e:Exception){
+            viewModelScope.launch(Dispatchers.IO) {
+                pagingFlow = repository.getPlaylist()
+            }
+        } catch (e: Exception) {
             Log.e("!@#", "Unexpected Error : ${e.message.toString()}")
         }
     }

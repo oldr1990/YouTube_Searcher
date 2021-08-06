@@ -4,11 +4,11 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.github.youtube_searcher.R
 import com.github.youtube_searcher.model.MappedYoutubeItem
-import com.github.youtube_searcher.model.room.RoomItem
 
 class PlaylistViewHolder(
     view: View,
@@ -20,9 +20,13 @@ class PlaylistViewHolder(
         val descriptionView = itemView.findViewById<TextView>(R.id.playlist_description)
         val imageView = itemView.findViewById<ImageView>(R.id.playlist_imageView)
         val deleteIcon = itemView.findViewById<ImageView>(R.id.playlist_delete)
+
         titleView.text = item.title
         descriptionView.text = item.title
         imageView.load(item.imageUrl)
+        titleView.setOnClickListener {
+            Toast.makeText(itemView.context, item.title,Toast.LENGTH_SHORT).show()
+        }
         deleteIcon.setOnClickListener { deleteClick(item)}
     }
 }

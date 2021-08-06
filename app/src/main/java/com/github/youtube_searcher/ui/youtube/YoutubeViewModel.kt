@@ -30,22 +30,22 @@ class YoutubeViewModel @Inject constructor(
     fun addToBuffer(item: MappedYoutubeItem){
         buffer.add(item)
         isBufferNotEmpty = buffer.isNotEmpty()
-        Log.i("!@#", "Buffer ${buffer.toString()}")
+        Log.i("!@#", "Buffer added $buffer")
     }
     fun removeFromBuffer(item: MappedYoutubeItem){
         buffer.remove(item)
         isBufferNotEmpty = buffer.isNotEmpty()
-        Log.i("!@#", "Buffer ${buffer.toString()}")
+        Log.i("!@#", "Buffer remove $buffer")
     }
 
     fun addBufferToPlaylist(){
-        Log.i("!@#", "Buffer ${buffer.toString()}")
-        viewModelScope.launch (Dispatchers.IO){
-            repositoryInterface.addToPlaylist(buffer)
+
+        viewModelScope.launch(Dispatchers.IO){
+            repositoryInterface.addToPlaylist(buffer.toList())
         }
+        Log.i("!@#", "Buffer $buffer")
         buffer.clear()
         isBufferNotEmpty = false
-        Log.i("!@#", "Buffer ${buffer.toString()}")
     }
 
     fun searchYoutube(search: String) {
